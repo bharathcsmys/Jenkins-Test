@@ -10,14 +10,20 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'python3 -m venv venv'
-                sh 'source venv/bin/activate && pip install Flask'
+                sh '''
+                    python3 -m venv venv
+                    source venv/bin/activate
+                    pip install Flask
+                '''
             }
         }
 
         stage('Run Flask App') {
             steps {
-                sh 'source venv/bin/activate && nohup python3 sample.py &'
+                sh '''
+                    source venv/bin/activate
+                    python3 sample.py & disown
+                '''
             }
         }
     }
